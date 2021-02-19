@@ -1,17 +1,56 @@
-function utopianTree(n) {
-    let height = 1;
-      let i=0; 
+const fs = require('fs');
 
-      while (i < n) {
-          if (i % 2 == 0) {
-              height *= 2
-          } else {
-              height += 1;
-          }
-          i++;
-      }
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
 
-  return height;
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', inputStdin => {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', _ => {
+    inputString = inputString.replace(/\s*$/, '')
+        .split('\n')
+        .map(str => str.replace(/\s*$/, ''));
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
 }
 
-/* Did not have enough time to complete this challenge */
+// Complete the utopianTree function below.
+function utopianTree(n) {
+      let height = 1;
+        let i=0; 
+        
+        while (i < n) {
+            if (i % 2 == 0) {
+                height *= 2
+            } else {
+                height += 1;
+            }
+            i++;
+        }
+       
+    return height;
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const t = parseInt(readLine(), 10);
+
+    for (let tItr = 0; tItr < t; tItr++) {
+        const n = parseInt(readLine(), 10);
+
+        let result = utopianTree(n);
+
+        ws.write(result + "\n");
+    }
+
+    ws.end();
+}
